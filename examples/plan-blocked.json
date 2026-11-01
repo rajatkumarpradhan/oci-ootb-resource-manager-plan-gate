@@ -1,0 +1,42 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.9.0",
+  "resource_changes": [
+    {
+      "address": "oci_objectstorage_bucket.backups",
+      "mode": "managed",
+      "type": "oci_objectstorage_bucket",
+      "name": "backups",
+      "change": {"actions": ["delete"], "before": {"name": "backups"}, "after": null}
+    },
+    {
+      "address": "oci_core_security_list.public_sl",
+      "mode": "managed",
+      "type": "oci_core_security_list",
+      "name": "public_sl",
+      "change": {"actions": ["update"], "after": {
+        "ingress_security_rules": [
+          {"stateless": false, "source": "0.0.0.0/0", "protocol": "6",
+           "tcp_options": {"min": 22, "max": 22}},
+          {"stateless": false, "source": "10.0.0.0/16", "protocol": "6",
+           "tcp_options": {"min": 443, "max": 443}}
+        ]}}
+    },
+    {
+      "address": "oci_core_instance.app",
+      "mode": "managed",
+      "type": "oci_core_instance",
+      "name": "app",
+      "change": {"actions": ["create"], "after": {
+        "shape": "VM.Standard.E5.Flex",
+        "freeform_tags": {}}}
+    },
+    {
+      "address": "oci_core_vcn.main",
+      "mode": "managed",
+      "type": "oci_core_vcn",
+      "name": "main",
+      "change": {"actions": ["no-op"], "after": {"cidr_blocks": ["10.0.0.0/16"]}}
+    }
+  ]
+}
