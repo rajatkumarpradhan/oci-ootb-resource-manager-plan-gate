@@ -1,0 +1,25 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.9.0",
+  "resource_changes": [
+    {
+      "address": "oci_core_instance.worker",
+      "mode": "managed",
+      "type": "oci_core_instance",
+      "name": "worker",
+      "change": {"actions": ["create"], "after": {
+        "shape": "VM.Standard.E2.1.Micro",
+        "freeform_tags": {"cost-center": "lab"}}}
+    },
+    {
+      "address": "oci_core_security_list.internal_sl",
+      "mode": "managed",
+      "type": "oci_core_security_list",
+      "name": "internal_sl",
+      "change": {"actions": ["update"], "after": {
+        "ingress_security_rules": [
+          {"stateless": false, "source": "10.0.0.0/16", "protocol": "6",
+           "tcp_options": {"min": 22, "max": 22}}]}}
+    }
+  ]
+}
